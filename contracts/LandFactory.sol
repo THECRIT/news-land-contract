@@ -3,10 +3,8 @@
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
-import "./LandMinter.sol";
 
-
-contract LandPortal is LandMinter {
+contract LandFactory {
     event NewQuestion(string id, address indexed from, uint256 reward);
 
     uint cooldownTime = 1 days;
