@@ -7,18 +7,7 @@ import "./LandMinter.sol";
 
 
 contract LandPortal is LandMinter {
-    event NewQuestion(string id, address indexed from, uint256 reward);
-
-    uint cooldownTime = 1 days;
-
-    struct Land {
-        // uint256 id; // Display on web for users to search for questions on the blockchain.
-        string content;
-        uint32 readyTime; // ref : CryptoZombie
-    }
-
-    // mapping(uint32 => Land) public idToLand; // id => Land
-    Land[] public lands;
+    // event NewQuestion(string id, address indexed from, uint256 reward);
 
     constructor() {
         console.log("land on .. !");
@@ -38,20 +27,21 @@ contract LandPortal is LandMinter {
     }
 
     function getLandById(uint32 _landId) public view returns (Land memory) {
-        return idToLand[_landId];
+        return lands[_landId];
     }
 
     function getContentById(uint32 _landId) public view returns (string memory) {
-      return idToLand[_landId].content;
+      return lands[_landId].content;
     }
 
     function getOwnerById(uint32 _landId) public view returns (address) {
       return ownerOf(_landId);
     }
 
+// logics
     function writeContent(uint32 _landId, string memory _content) public onlyLandOwner(_landId) returns (string memory) {
-      Land storage myLand = idToLand[_landId];
-      require(_isReady(myLand), "It's not ready to write");
+      Land storage myLand = lands[_landId];
+      require(_isReady(myLand), "It's not ready to write! It is decided by DAO to write an article once a day.");
 
       myLand.content = _content;
 

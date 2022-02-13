@@ -8,8 +8,9 @@ import "hardhat/console.sol";
 
 // We need to import the helper functions from the contract that we copy/pasted.
 import { Base64 } from "./libraries/Base64.sol";
+import "./LandFactory.sol";
 
-contract LandMinter is ERC721URIStorage {
+contract LandMinter is ERC721URIStorage, LandFactory {
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
 
@@ -19,7 +20,11 @@ contract LandMinter is ERC721URIStorage {
     console.log("This is my NFT contract. Woah!");
   }
 
-  function mintNewsLand() public {
+  function mint() public {
+    _mintNewsLand();
+  }
+
+  function _mintNewsLand() internal {
     uint256 newItemId = _tokenIds.current();
 
     require(newItemId < 900, "Tokens are sold out!");
@@ -56,6 +61,8 @@ contract LandMinter is ERC721URIStorage {
     
     // Update your URI!!!
     _setTokenURI(newItemId, finalTokenUri);
+
+    _createLand();
   
     _tokenIds.increment();
     console.log("An NFT w/ ID %s has been minted to %s", newItemId, msg.sender);
