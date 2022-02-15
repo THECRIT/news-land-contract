@@ -8,9 +8,8 @@ import "hardhat/console.sol";
 
 // We need to import the helper functions from the contract that we copy/pasted.
 import { Base64 } from "./libraries/Base64.sol";
-import "./LandFactory.sol";
 
-contract LandMinter is ERC721URIStorage, LandFactory {
+contract LandMinter is ERC721URIStorage {
   using Counters for Counters.Counter;
   Counters.Counter private _tokenIds;
 
@@ -61,9 +60,7 @@ contract LandMinter is ERC721URIStorage, LandFactory {
     
     // Update your URI!!!
     _setTokenURI(newItemId, finalTokenUri);
-
-    _createLand();
-  
+    
     _tokenIds.increment();
     console.log("An NFT w/ ID %s has been minted to %s", newItemId, msg.sender);
   }

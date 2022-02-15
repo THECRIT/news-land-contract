@@ -18,39 +18,10 @@ contract LandPortal is LandMinter {
         _;
     }
 
-    function _triggerCooldown(Land storage _land) internal {
-      _land.readyTime = uint32(block.timestamp + cooldownTime);
-    }
-
-    function _isReady(Land storage _land) internal view returns (bool) {
-      return (_land.readyTime <= block.timestamp);
-    }
-
-    function getLandById(uint32 _landId) public view returns (Land memory) {
-        return lands[_landId];
-    }
-
-    function getContentById(uint32 _landId) public view returns (string memory) {
-      return lands[_landId].content;
-    }
-
     function getOwnerById(uint32 _landId) public view returns (address) {
       return ownerOf(_landId);
     }
 
     function getLatestTokenId() public view returns (uint32) {
-      return uint32(lands.length - 1);
-    }
-
-// logics
-    function writeContent(uint32 _landId, string memory _content) public onlyLandOwner(_landId) returns (string memory) {
-      Land storage myLand = lands[_landId];
-      require(_isReady(myLand), "It's not ready to write! It is decided by DAO to write an article once a day.");
-
-      myLand.content = _content;
-
-      _triggerCooldown(myLand);
-
-      return myLand.content;
     }
 }
