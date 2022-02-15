@@ -38,6 +38,10 @@ contract LandPortal is LandMinter {
       return ownerOf(_landId);
     }
 
+    function getLatestTokenId() public view returns (uint32) {
+      return uint32(lands.length - 1);
+    }
+
 // logics
     function writeContent(uint32 _landId, string memory _content) public onlyLandOwner(_landId) returns (string memory) {
       Land storage myLand = lands[_landId];

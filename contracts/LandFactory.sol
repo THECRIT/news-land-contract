@@ -14,7 +14,7 @@ contract LandFactory {
         uint32 readyTime;
     }
     
-    Land[] public lands;
+    Land[] public lands; // => id = 0 ~ : index
 
     constructor() {
         console.log("land on .. !");
